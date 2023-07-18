@@ -1,13 +1,14 @@
 const express = require("express")
 const UserMoniBag = require("./scheme_monogoes");
-const sendMail = require("../email_otp/email_otp");
+//const sendMail = require("../email_otp/email_otp");
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 //const Flutterwave = require('../node_modules/flutterwave-node-v3');
-const Otp = require("./otp/otp_scheme");
+const Otp = require("./otp");
+
 //const Otp = require("flutterwave-node-v3/lib/rave.otps");
 //const flw = new Flutterwave(process.env.FLW_PUBLIC_KEY, process.env.FLW_SECRET_KEY);
-UserMoniBag
+
 
 ///Register Users
 // Register Users
