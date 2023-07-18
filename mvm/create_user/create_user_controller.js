@@ -7,7 +7,7 @@ var jwt = require('jsonwebtoken');
 const Otp = require("./otp/otp_scheme");
 //const Otp = require("flutterwave-node-v3/lib/rave.otps");
 //const flw = new Flutterwave(process.env.FLW_PUBLIC_KEY, process.env.FLW_SECRET_KEY);
-
+UserMoniBag
 
 ///Register Users
 // Register Users
