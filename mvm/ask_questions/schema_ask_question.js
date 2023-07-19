@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+   const mongoose = require('mongoose');
 
 const AskQuestion = new mongoose.Schema({
     classteacher: { type: String, default: '', required: true },
