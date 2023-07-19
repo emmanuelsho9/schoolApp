@@ -30,7 +30,7 @@ const registerUser = async function (req, res) {
         const token = jwt.sign({ name, email, password, phoneNumber }, 'MoniBag');
 
         const createUser = await UserMoniBag.create({
-          otp,
+          otp,  
           token,
           email,
           name,
