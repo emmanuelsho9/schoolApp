@@ -1,4 +1,4 @@
-const { model } = require("mongoose");
+ const { model } = require("mongoose");
 const AskQuestion = require("./schema_ask_question");
 
 const createPerm = async function(req, res){
