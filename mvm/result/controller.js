@@ -3,56 +3,73 @@ const Subject = require('./schema');
 // Connect to the MongoDB database
 
 
-    // Retrieve subjects with student information
-   const findSubject= async function (req, res){
-    Subject.find()
-      .populate('student')
-      .exec()
-      .then((subjects) => {
-        subjects.forEach((subject) => {
-          console.log(`Subject: ${subject.subject}`);
-          console.log(`Grade: ${subject.grade}`);
-          console.log(`Score: ${subject.score}`);
-          console.log(`Student: ${subject.studentId}`);
-          console.log('------------------------');
-        });
-      })
-      .catch((error) => {
-        console.error('Error retrieving subjects:', error);
-      })
-      .finally(() => {
-        // Close the MongoDB connection
-       // mongoose.disconnect();
-      });
-   }
+
 
 
 const createResult = async function (req, res) {
+  const { studentId, year, term, studentName, teacher, results } = req.body;
 
+  try {
+    const newResult = { subject: results[0].subject, score: results[0].score, grade: results[0].grade };
+    // Create a new result object from the provided data inside the first element of the results array
   
-    try {
-      const { subject, grade, score,  studentId } = req.body;
-      if (!subject || !grade || !score || !studentId ) {
-        throw new Error("Please provide all required inputs");
-      } else {
+    const existingSubject = await Subject.findOneAndUpdate(
+      { term: term, year: year, studentName: studentName },
+      { $push: { results: newResult } },
+      { new: true }
+    );
   
-        const createUser = await Subject.create({
-            subject,  
-            grade,
-            score,
-            studentId,
-            
-          });
-  
-          res.send(createUser);
-      }
-    } catch (error) {
-      res.status(400).json({ error: error.message });
+    if (existingSubject) {
+      res.send(existingSubject);
+    } else {
+           const subjectData = {
+          teacher: teacher,
+          results, // subject is now defined from the destructured variable
+          studentName: studentName,
+          studentId: studentId,
+          year: year,
+          term: term,
+        };
+        const createdSubject = await Subject.create(subjectData);
+        res.send(createdSubject);
     }
-  };
+  } catch (error) {
+    // Handle any errors that occur during the update process
+    res.status(500).json({ error: error.message });
+  }
+  
+
+};
+
+
+const getResult = async function (req, res) {
+  const { studentId } = req.body;
+
+  try {
+    // Create a new result object from the provided data inside the first element of the results array
+  
+    const existingSubject = await Subject.find(
+      {  studentId: studentId },
+
+    );
+  
+    if (existingSubject) {
+      res.send(existingSubject);
+    } else {
+        res.send("createdSubject");
+    }
+  } catch (error) {
+    // Handle any errors that occur during the update process
+    res.status(500).json({ error: error.message });
+  }
+  
+
+};
+
+
 
  
       module.exports ={
-        findSubject,createResult
+        createResult,getResult
       }
  

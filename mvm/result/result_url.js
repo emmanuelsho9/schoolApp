@@ -1,11 +1,12 @@
-const { findSubject,createResult } = require("./controller");
+const { createResult,getResult } = require("./controller");
 const express = require("express");
 const result = express.Router();
 
 
 
 
-result.post("/get_result",createResult)
+result.post("/create_result",createResult)
+result.post("/get_result",getResult)
 
 
 module.exports = result;
