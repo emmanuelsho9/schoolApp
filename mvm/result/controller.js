@@ -66,10 +66,75 @@ const getResult = async function (req, res) {
 
 };
 
+const getAllResult = async function (req, res){
+  const allUser = await Subject.find()
+    res.send(allUser)
+}
 
 
+
+const editResult = async function (req, res) {
+  const id = req.params.id;
+
+  try {
+    // Find the timetable document by its ID
+    const timetable = await Subject.findById(id);
+
+    // Check if the timetable exists in the database
+    if (!timetable) {
+      return res.status(404).json({ error: "result not found" });
+    }else{
+
+      // Destructure the data from the request body
+      const {  year, term, teacher, results } = req.body;
+
+    // Update the timetable fields based on the data from the request body
+    // For example:
+    timetable.year = year;
+    timetable.term = term;
+    timetable.teacher = teacher;
+    timetable.results = results;
+   
+
+    // Save the updated timetable to the database
+    await timetable.save();
+
+    // Respond with the updated timetable
+    res.json(timetable);
+
+    }
+
+    
+  } catch (error) {
+    // Handle any errors that might occur during the process
+    res.status(500).json({ error: "Failed to edit result" });
+  }
+};
+
+
+const deleteResult = async function (req, res) {
+  const id = req.params.id;
+
+  try {
+    // Find the timetable document by its ID
+    const timetable = await Subject.findByIdAndDelete (id);
+
+    // Check if the timetable exists in the database
+    if (!timetable) {
+      return res.status(404).json({ error: "result not found" });
+    }else{
+
+// Respond with a success message or any other desired response
+      res.json({ message: "result deleted successfully" });      }
+
+    
+  } catch (error) {
+    // Handle any errors that might occur during the process
+    res.status(500).json({ error: "Failed to delete result" });
+  }
+};
  
       module.exports ={
-        createResult,getResult
+        createResult,getResult,getAllResult,deleteResult,editResult
       }
  

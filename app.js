@@ -5,6 +5,7 @@ const errorHandleMiddleWare = require('./mvm/middle_ware/error_handler');
 const assignRoute = require("./mvm/assignment/assignment_url_controller");
 const ask_question_req = require("./mvm/ask_questions/url_controller");
 const result = require("./mvm/result/result_url");
+const timeTable = require("./mvm/time_table/time_table_url");
 
 const app = express();
 
@@ -18,6 +19,7 @@ assignRoute
 
 app.use(`${API_VERSION}`,registerUsers)
 app.use(`${API_VERSION}`,assignRoute)
+app.use(`${API_VERSION}`,timeTable)
 app.use(`${API_VERSION}`,ask_question_req)
 app.use(`${API_VERSION}`,result)
 
